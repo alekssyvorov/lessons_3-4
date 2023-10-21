@@ -1,41 +1,55 @@
+import random
 class Student:
-    # Атрибуты уровня класса
-    group = "C2016"
-    counter = 0
-
-    # дандро методы или волшебные методы
-    def __init__(self, age, height, name=None):
-        # Атрибуты уровня объекта
+    def __init__(self, name):
         self.name = name
-        self.age = age
-        self.height = height
-        Student.counter += 1
-        print("Объект был создан")
-    def grow(self, height=1):
-        self.height += height
+        self.gladness = 50
+        self.progress = 0
+        self.alive = True
 
-    def __str__(self):
-        return f"I'm name {self.name}. My age is {self.age}"
-    def __del__(self):
-        print("Удален объект")
+    def to_study(self):
+        print("Time to study!")
+        self.progress += 0.15
+        self.gladness -= 5
+    def to_sleep(self):
+        print("I will sleep")
+        self.gladness += 3
+    def to_chill(self):
+        print("Rest time")
+        self.gladness += 3
+        self.progress -= 0.1
+    def is_alive(self):
+        if self.progress < -0.5:
+            print("Cant out...")
+            self.alive = False
+        elif self.gladness <= 0:
+            print('Depression...')
+            self.alive = False
+        elif self.progress > 5:
+            print('Passed externally...')
+            self.alive = False
+    def end_of_day(self):
+        print(f"Gladness = {self.gladness}")
+        print(f"Progress = {round(self.progress, 2)}")
+    def live(self, day):
+        s = f"Day {day} of {self.name} life"
+        print(f"{s:=^50}")
+        live_cube = random.randint(1,3)
+        if live_cube == 1:
+            self.to_chill()
+        elif live_cube == 2:
+            self.to_sleep()
+        elif live_cube == 3:
+            self.to_study()
+        self.end_of_day()
+        self.is_alive()
 
-print(Student.group)
+nick = Student(name="Nikolas")
 
-nick = Student(16, 165, 'Nick')
-print(nick)
-# print(nick.age)
-# print(nick.height)
-# print(nick.name)
-# print(nick.group)
-# kate = Student(17, 175, "Ekaterina")
-# print(kate.age)
-# print(kate.height)
-# print(kate.name)
-# print(kate.group)
-# print(Student.counter)
-# elena = Student(18, 155, "Elena")
-# print(Student.counter)
-# print("Height Nick", nick.height)
-# nick.grow(25)
-# print("Height Nick", nick.height)
-# kate.grow(30)
+for day in range(365):
+    if nick.alive == False:
+        break
+    nick.live(day)
+
+
+
+
